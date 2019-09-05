@@ -1,45 +1,12 @@
-const authEmailPass = (email, password) => {
-  firebase.auth().signInWithEmailAndPassword(email.value, password.value)
-    .then((result) => {
-      const currentUser = result.user.displayName;
-      alert(`Bienvenid@ ${currentUser}, has ingresado con exito.`);
-      return result.user.email;
-    });
-  // .catch(error => errorCases(error.code));
-};
+/* eslint-disable max-len */
+const authEmailPass = (email, password) => firebase.auth().signInWithEmailAndPassword(email, password);
 
-const createUserEmailPass = (email, password, names) => {
-  firebase
-    .auth()
-    .createUserWithEmailAndPassword(email.value, password.value)
-    .then((result) => {
-      result.user.updateProfile({
-        displayName: names.value,
-      });
-    })
-    .then(() => {
-      const user = firebase.auth().currentUser;
-      if (user != null) {
-        setTimeout(() => {
-          alert(`Bienvenid@ ${user.displayName}, tu registro fue exitoso.`);
-        }, 400);
-      }
-    });
-  // .catch(error => errorCases(error.code));
-};
+const createUserEmailPass = (email, password) => firebase.auth().createUserWithEmailAndPassword(email, password);
 
-const loginWithGoogle = () => {
-  if (!firebase.auth().currentUser) {
-    firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider())
-      .then((response) => {
-        const infoUser = response.user;
-        alert(`Bienvenid@ ${infoUser.displayName}, has ingresado con exito.`);
-        return response.user.email;
-      });
-    // .catch(error => errorCases(error.code));
-  } else {
-    firebase.auth().signOut();
-  }
-};
+const loginWithGoogle = () => firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider());
 
-export { authEmailPass, createUserEmailPass, loginWithGoogle };
+const loginWithFacebook = () => firebase.auth().signInWithPopup(new firebase.auth.FacebookAuthProvider());
+
+export {
+  authEmailPass, createUserEmailPass, loginWithGoogle, loginWithFacebook,
+};

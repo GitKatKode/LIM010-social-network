@@ -1,5 +1,6 @@
 import { viewTheLogin } from '../views/loginView.js';
 import { viewTheSignup } from '../views/signupView.js';
+import { viewTheSocialNet } from '../views/socialNetView.js';
 
 const container = document.getElementById('container');
 
@@ -17,6 +18,10 @@ const changeView = (router) => {
     case '#/viewSignup':
     {
       return container.appendChild(viewTheSignup());
+    }
+    case '#/social-network':
+    {
+      return container.appendChild(viewTheSocialNet());
     }
     default:
       return router;

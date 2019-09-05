@@ -1,0 +1,263 @@
+/* ::-webkit-scrollbar {
+    width: 5px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgb(38, 109, 185);
+    border-radius: 50px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #ffcc00;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: rgb(243, 243, 243);
+    border-radius: 50px;
+  } */
+/*GENERAL-----------------------------------------*/
+* {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  color: inherit;
+  text-decoration: none;
+  list-style-type: none;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  outline: none;
+  position: relative;
+}
+
+.display-flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.btn {
+  border-radius: 35px;
+  cursor: pointer;
+  padding: 10px 28px;
+  font-size: 15px;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+}
+
+.btn-icon {
+  background-size: 50%;
+  background-repeat: no-repeat;
+  background-position: center;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.btn-icon:hover {
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+}
+
+.flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.none {
+  display: none !important;
+}
+
+/*------------------------*/
+body {
+  font-family: 'Fredericka the Great', cursive;
+  color: #555353;
+}
+
+.sec-autentificacion {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background-color: #fcf9ec;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.img-logo {
+  width: 50%;
+  max-width: 500px;
+  min-width: 300px;
+  background-image: url(img/logo-color.png);
+  background-size: cover;
+}
+
+.sec-autentificacion .text-peq {
+  text-align: center;
+  font-size: 12px;
+  width: 100%;
+}
+
+.banner .text-login {
+  display: none;
+}
+
+.sec-autentificacion h1 {
+  width: 200px;
+  height: 138px;
+  font-size: 0;
+  background-image: url(img/logo-color.png);
+  background-size: 100%;
+}
+
+.form-login {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-top: 30px;
+  width: 320px;
+}
+
+.text-login {
+  margin-bottom: 10px;
+  font-size: 18px;
+  text-align: center;
+}
+
+.login-input {
+  font-size: 13px;
+  width: 250px;
+  background-color: white;
+  color: #444444;
+  padding: 10px 15px;
+  border-radius: 25px;
+  border: 1px solid #12d369;
+  margin-top: 15px;
+}
+
+.icon-input {
+  background-size: cover;
+  width: 17px;
+  height: 17px;
+  position: absolute;
+  cursor: pointer;
+}
+
+.info-alert {
+  border: 1px solid #ff0c19;
+}
+
+.ms-info-alert {
+  color: #ff0c19;
+  width: 250px;
+  text-align: center;
+  font-size: 12px;
+  margin: 7px 0 10px;
+  font-family: 'Courier New', Courier, monospace;
+  /* height: 30px; */
+}
+
+.icon-clave {
+  background-image: url(img/icon-ocultar.png);
+  width: 17px;
+  height: 17px;
+  right: 13px;
+  bottom: 10px;
+}
+
+.cont-acceso.click .icon-clave {
+  opacity: 0.8;
+}
+
+.icon-clave.mostrar {
+  background-image: url(img/icon-mostrar.png);
+}
+
+.login-btn {
+  background-color: #12d369;
+  color: white;
+}
+
+.cont-btn-redes {
+  width: 100%;
+  margin-top: 25px;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.cont-btn-redes button {
+  width: 37px;
+  height: 37px;
+  margin: 15px 9px;
+  cursor: pointer;
+}
+
+.btn-google {
+  background-color: #12d369;
+  background-image: url(img/icon-google.png);
+  padding: 12px;
+  border-radius: 50px;
+}
+
+.btn-facebook {
+  background-color: #12d369;
+  background-image: url(img/icon-facebook.png);
+  padding: 12px;
+  border-radius: 50px;
+}
+
+.sec-autentificacion .text-peq a {
+  font-weight: bold;
+}
+
+@media (min-width: 801px) {
+  .banner {
+    width: 50%;
+    height: 100vh;
+    background-image: url(img/plastic-banner.jpg);
+    background-size: contain;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .banner:before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 100%;
+  }
+  .sec-autentificacion h1 {
+    width: 200px;
+  }
+  .banner .text-login {
+    margin: 20px 0;
+    color: white;
+    width: 80%;
+    font-size: 20px;
+    display: initial;
+  }
+  .sec-autentificacion {
+    width: 100%;
+    height: 100vh;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .form-login {
+    width: 50%;
+    height: 100%;
+    margin: 0;
+  }
+}
+/*# sourceMappingURL=style.css.map */

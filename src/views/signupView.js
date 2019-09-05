@@ -1,4 +1,5 @@
 import { createUserEmailPass } from '../lib/authentication.js';
+import { errorCases } from '../lib/authErrors.js';
 
 const viewSignup = `
   <p class="text-login">Entra a un mundo consciente.<br> <strong> Siente, piensa y actúa. </strong></p>
@@ -20,39 +21,47 @@ const viewTheSignup = () => {
   const formElem = document.createElement('form');
   formElem.setAttribute('class', 'display-flex form-login');
   formElem.setAttribute('id', 'form-signup');
-  formElem.innerHTML += viewSignup;
+  formElem.innerHTML = viewSignup;
+
+  const signupName = formElem.querySelector('#input-name');
+  const signupMail = formElem.querySelector('#input-mail');
+  const signupPassword = formElem.querySelector('#input-password');
+  const btnRegister = formElem.querySelector('#btn-register');
+  const btnKeySignup = formElem.querySelector('#icon-clave');
+  // const errorMsg = formElem.querySelector('#ms-info-alert');
+
+  let setHide = 0;
+
+  btnRegister.addEventListener('click', (e) => {
+    e.preventDefault();
+    createUserEmailPass(signupMail.value, signupPassword.value)
+      .then((result) => {
+        result.user.updateProfile({
+          displayName: signupName.value,
+        });
+      })
+      .then(() => {
+        const user = firebase.auth().currentUser;
+        alert(`Bienvenid@ ${user.displayName}, tu registro fue exitoso.`);
+      })
+      .catch((error) => {
+        errorCases(error.code);
+      });
+  });
+
+  btnKeySignup.addEventListener('click', () => {
+    if (setHide === 0) {
+      signupPassword.setAttribute('type', 'text');
+      setHide = 1;
+      btnKeySignup.classList.add('mostrar');
+    } else {
+      signupPassword.setAttribute('type', 'password');
+      setHide = 0;
+      btnKeySignup.classList.remove('mostrar');
+    }
+  });
+
   return formElem;
 };
-
-const signup = viewTheSignup();
-
-let setHide = 0;
-
-const signupName = signup.querySelector('#input-name');
-const signupMail = signup.querySelector('#input-mail');
-const signupPassword = signup.querySelector('#input-password');
-const btnRegister = signup.querySelector('#btn-register');
-const btnKeySignup = signup.querySelector('#icon-clave');
-
-
-btnRegister.addEventListener('click', (e) => {
-  console.log(e);
-  console.log('entra registro');
-
-  e.preventDefault();
-  createUserEmailPass(signupMail, signupPassword, signupName);
-});
-
-btnKeySignup.addEventListener('click', () => {
-  if (setHide === 0) {
-    signupPassword.setAttribute('type', 'text');
-    setHide = 1;
-    btnKeySignup.classList.add('mostrar');
-  } else {
-    signupPassword.setAttribute('type', 'password');
-    setHide = 0;
-    btnKeySignup.classList.remove('mostrar');
-  }
-});
 
 export { viewTheSignup };

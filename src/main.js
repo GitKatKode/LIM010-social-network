@@ -13,8 +13,6 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.auth().useDeviceLanguage();
 
-const auth = firebase.auth();
-
 const init = () => {
   changeView(window.location.hash);
   window.addEventListener('hashchange', () => {
@@ -24,16 +22,10 @@ const init = () => {
 
 window.addEventListener('load', init);
 
-auth.onAuthStateChanged((user) => {
+firebase.auth().onAuthStateChanged((user) => {
   if (user) {
-    console.log('user logged in:');
+    window.location.hash = '#/social-network';
   } else {
-    console.log('user logged out');
+    window.location.hash = '';
   }
-});
-
-const logOut = document.querySelector('#logout');
-logOut.addEventListener('click', (e) => {
-  e.preventDefault();
-  auth.signOut();
 });

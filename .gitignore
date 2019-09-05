@@ -5,4 +5,6 @@ node_modules/
 .firebaserc
 firebase-debug.log
 firebase.json
-
+_mock_
+style.css.map
+style.scss
