@@ -24,7 +24,7 @@ const viewLogin = `
 
 const viewTheLogin = () => {
   const formElem = document.createElement('form');
-  formElem.setAttribute('class', 'sec-autentificacion display-flex display-flex form-login');
+  formElem.setAttribute('class', 'sec-autentificacion display-flex form-login');
   formElem.setAttribute('id', 'form-login');
   formElem.innerHTML = viewLogin;
 
@@ -40,29 +40,17 @@ const viewTheLogin = () => {
 
   loginGoogle.addEventListener('click', (e) => {
     e.preventDefault();
-    loginWithGoogle()
-      .then((response) => {
-        const infoUser = response.user;
-        alert(`Bienvenid@ ${infoUser.displayName}, has ingresado con exito.`);
-      });
+    loginWithGoogle();
   });
 
   loginFacebook.addEventListener('click', (e) => {
     e.preventDefault();
-    loginWithFacebook()
-      .then((response) => {
-        const infoUser = response.user;
-        alert(`Bienvenid@ ${infoUser.displayName}, has ingresado con exito.`);
-      });
+    loginWithFacebook();
   });
 
   btnLogin.addEventListener('click', (e) => {
     e.preventDefault();
     authEmailPass(loginMail.value, loginPassword.value)
-      .then((result) => {
-        const currentUser = result.user.displayName;
-        alert(`Bienvenid@ ${currentUser}, has ingresado con exito.`);
-      })
       .catch((error) => {
         errorCases(error.code, errorMsg);
       });

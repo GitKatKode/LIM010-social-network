@@ -19,7 +19,7 @@ const viewSignup = `
 
 const viewTheSignup = () => {
   const formElem = document.createElement('form');
-  formElem.setAttribute('class', 'display-flex form-login');
+  formElem.setAttribute('class', 'sec-autentificacion display-flex form-login');
   formElem.setAttribute('id', 'form-signup');
   formElem.innerHTML = viewSignup;
 
@@ -28,7 +28,7 @@ const viewTheSignup = () => {
   const signupPassword = formElem.querySelector('#input-password');
   const btnRegister = formElem.querySelector('#btn-register');
   const btnKeySignup = formElem.querySelector('#icon-clave');
-  // const errorMsg = formElem.querySelector('#ms-info-alert');
+  const errorMsg = formElem.querySelector('#ms-info-alert');
 
   let setHide = 0;
 
@@ -40,12 +40,8 @@ const viewTheSignup = () => {
           displayName: signupName.value,
         });
       })
-      .then(() => {
-        const user = firebase.auth().currentUser;
-        alert(`Bienvenid@ ${user.displayName}, tu registro fue exitoso.`);
-      })
       .catch((error) => {
-        errorCases(error.code);
+        errorCases(error.code, errorMsg);
       });
   });
 

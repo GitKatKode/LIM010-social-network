@@ -219,6 +219,46 @@ body {
   font-weight: bold;
 }
 
+.nav-menu {
+  height: 6vh;
+  width: 100vw;
+  background-color: #555353;
+}
+
+.current-user-picture {
+  border-radius: 50%;
+}
+
+.post-form {
+  border: 0.1em solid darkcyan;
+  border-radius: 16px;
+  width: 90%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  padding: 20px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin: auto;
+}
+
+.post-text {
+  border: 0.1em solid darkcyan;
+  border-radius: 16px;
+  width: 90%;
+  margin: auto;
+}
+
+.upload {
+  height: 2em;
+  width: 2em;
+  border-radius: 100%;
+  cursor: pointer;
+}
+
 @media (min-width: 801px) {
   .banner {
     width: 50%;
