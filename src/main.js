@@ -5,7 +5,7 @@ const firebaseConfig = {
   authDomain: 'social-net-43b5d.firebaseapp.com',
   databaseURL: 'https://social-net-43b5d.firebaseio.com',
   projectId: 'social-net-43b5d',
-  storageBucket: '',
+  storageBucket: 'social-net-43b5d.appspot.com',
   messagingSenderId: '1066417284678',
   appId: '1:1066417284678:web:1b3cdc75749c5f9c',
 };
@@ -22,10 +22,6 @@ const init = () => {
 
 window.addEventListener('load', init);
 
-firebase.auth().onAuthStateChanged((user) => {
-  if (user) {
-    window.location.hash = '#/social-network';
-  } else {
-    window.location.hash = '';
-  }
-});
+const logOut = document.getElementById('logout');
+
+logOut.addEventListener('click', () => { firebase.auth().signOut().then(window.location.hash = '#'); });

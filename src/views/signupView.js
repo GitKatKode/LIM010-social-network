@@ -39,6 +39,7 @@ const viewTheSignup = () => {
         result.user.updateProfile({
           displayName: signupName.value,
         });
+        window.location.hash = '#/social-network';
       })
       .catch((error) => {
         errorCases(error.code, errorMsg);
@@ -56,7 +57,7 @@ const viewTheSignup = () => {
       btnKeySignup.classList.remove('mostrar');
     }
   });
-
+  document.getElementById('logout').classList.add('none');
   return formElem;
 };
 

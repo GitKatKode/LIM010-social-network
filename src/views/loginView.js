@@ -40,17 +40,20 @@ const viewTheLogin = () => {
 
   loginGoogle.addEventListener('click', (e) => {
     e.preventDefault();
-    loginWithGoogle();
+    loginWithGoogle()
+      .then(window.location.hash = '#/social-network');
   });
 
   loginFacebook.addEventListener('click', (e) => {
     e.preventDefault();
-    loginWithFacebook();
+    loginWithFacebook()
+      .then(window.location.hash = '#/social-network');
   });
 
   btnLogin.addEventListener('click', (e) => {
     e.preventDefault();
     authEmailPass(loginMail.value, loginPassword.value)
+      .then(window.location.hash = '#/social-network')
       .catch((error) => {
         errorCases(error.code, errorMsg);
       });
@@ -67,7 +70,6 @@ const viewTheLogin = () => {
       btnKeyLogin.classList.remove('mostrar');
     }
   });
-
   return formElem;
 };
 

@@ -7,6 +7,14 @@ const loginWithGoogle = () => firebase.auth().signInWithPopup(new firebase.auth.
 
 const loginWithFacebook = () => firebase.auth().signInWithPopup(new firebase.auth.FacebookAuthProvider());
 
+const theUserIs = (callback) => {
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      callback(user);
+    }
+  });
+};
+
 export {
-  authEmailPass, createUserEmailPass, loginWithGoogle, loginWithFacebook,
+  authEmailPass, createUserEmailPass, loginWithGoogle, loginWithFacebook, theUserIs,
 };
