@@ -284,13 +284,14 @@ body {
 }
 
 /*Formulario-----------*/
-.container-post-form {
+.container-posts {
   width: 70%;
   -webkit-box-flex: 1;
       -ms-flex-positive: 1;
           flex-grow: 1;
   max-width: 600px;
   min-width: 300px;
+  font-family: 'Courier New', Courier, monospace;
 }
 
 /*Formulario------------------------*/
@@ -306,6 +307,10 @@ body {
   -webkit-box-shadow: 0px 0px 5px -3px #12d369;
           box-shadow: 0px 0px 5px -3px #12d369;
   margin-bottom: 30px;
+  width: 60%;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
 }
 
 .input-form-user {
@@ -511,10 +516,6 @@ body {
     width: 50%;
     height: 100%;
     margin: 0;
-  }
-  .container-net {
-    -ms-flex-wrap: nowrap;
-        flex-wrap: nowrap;
   }
 }
 /*# sourceMappingURL=style.css.map */

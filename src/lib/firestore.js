@@ -1,10 +1,14 @@
-const addPost = (newPost, url, name, email, date) => firebase.firestore().collection('posts').add({
-  comment: newPost,
-  image: url,
-  userName: name,
-  userEmail: email,
-  publishDate: date,
-});
+const addPost = (newPost, url, userID, name, email, date, photo) => firebase.firestore().collection('posts')
+  .doc(`${userID}${date}`)
+  .set({
+    userID,
+    comment: newPost,
+    image: url,
+    userName: name,
+    userEmail: email,
+    userPhoto: photo,
+    publishDate: date,
+  });
 
 // const deletePost = post => firebase.firestore().collection('posts').doc(post).delete();
 
@@ -17,4 +21,13 @@ const uploadImage = (imgFile, callback) => {
   });
 };
 
-export { addPost, uploadImage };
+const postViewer = callback => firebase.firestore().collection('posts')
+  .onSnapshot((querySnapshot) => {
+    const postsArray = [];
+    querySnapshot.forEach((doc) => {
+      postsArray.push(doc);
+    });
+    callback(postsArray);
+  });
+
+export { addPost, uploadImage, postViewer };

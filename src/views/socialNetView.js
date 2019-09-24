@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
-import { addPost, uploadImage } from '../lib/firestore.js';
+import { addPost, uploadImage, postViewer } from '../lib/firestore.js';
+import { posts } from './postView.js';
 
 const viewSocialNet = `
 <div class="user-card display-flex">
@@ -50,6 +51,7 @@ const viewTheSocialNet = (user) => {
   const btnUploadImg = mainElem.querySelector('#btn-upload-img');
   const btnUploadPost = mainElem.querySelector('#btn-create-post');
   const form = mainElem.querySelector('#publish-form');
+  const thePost = mainElem.querySelector('#container-posts');
 
   if (user != null) {
     userPhoto.setAttribute('src', user.photoURL === null ? 'img/default-avatar.png' : user.photoURL);
@@ -68,8 +70,38 @@ const viewTheSocialNet = (user) => {
   btnUploadPost.addEventListener('click', (e) => {
     e.preventDefault();
     const post = mainElem.querySelector('#content-to-post').value;
-    addPost(post, urlActive, user.displayName, user.email, new Date());
+    const activeDate = new Date();
+
+    const name = user.displayName ? user.displayName : user.email;
+    const photo = user.photoURL ? user.photoURL : 'img/default-avatar.png';
+    addPost(post, urlActive, user.uid, name, user.email, activeDate, photo)
+      .then(() => {
+        console.log('Document successfully written!');
+      })
+      .catch((error) => {
+        console.error('Error writing document: ', error);
+      });
     form.reset();
+  });
+
+  postViewer((allPosts) => {
+    // thePost.innerHTML += posts(`${user.uid}${dateActive}`, photo, name, post, urlActive, date, 0, 0, '??');
+    // publicar post en html
+
+    allPosts.forEach((post) => {
+      // eslint-disable-next-line no-underscore-dangle
+      const onePost = post.data();
+      const activeDate = onePost.publishDate.toDate();
+      const date = `
+      ${(`0${activeDate.getDate()}`).slice(-2)}/
+      ${(`0${activeDate.getMonth() + 1}`).slice(-2)}/
+      ${activeDate.getFullYear()}
+      ${(`0${activeDate.getHours()}`).slice(-2)}:
+      ${(`0${activeDate.getMinutes()}`).slice(-2)}:
+      ${(`0${activeDate.getSeconds()}`).slice(-2)}
+      `;
+      thePost.innerHTML += posts('idpost', onePost.userPhoto, onePost.userName, onePost.comment, onePost.image, date, 0, 0, '??');
+    });
   });
 
   document.getElementById('menu-bar').classList.remove('none');
