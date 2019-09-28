@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import {
-  addPost, uploadImage, postViewer, updatePost,
+  addPost, uploadImage, postViewer, updatePost, deletePost,
 } from '../lib/firestore.js';
 import { viewPosts, editPostForm } from './postView.js';
 
@@ -127,58 +127,54 @@ const viewTheSocialNet = (user) => {
       if (singleBtnEdit.dataset.user === user.uid) {
         singleBtnEdit.classList.remove('none');
         singleBtnEdit.addEventListener('click', (btnID) => {
-          Object.entries(postsCollection).forEach((article) => {
-            const articleID = article[1].dataset.postid;
-            let articletoReplace = article[1];
-            const postToEdit = btnID.target.id;
-            if (articleID === postToEdit) {
-              const objToEdit = {
-                postID: postToEdit,
-                userID: articletoReplace.querySelector('.btn-edit').dataset.user,
-                userName: articletoReplace.querySelector('.post-user-name').innerText,
-                userEmail: articletoReplace.querySelector('.cont-post-user-info').dataset.email,
-                userPhoto: articletoReplace.querySelector('.post-user-photo').currentSrc,
-                publishDate: articletoReplace.querySelector('.post-user-date').innerText,
-                comment: articletoReplace.querySelector('.post-user-text').outerText,
-                image: articletoReplace.querySelector('.post-user-img').currentSrc,
-                privacy: '1',
-              };
-              const elementToEdit = editPostForm(objToEdit);
-              const editform = document.createRange().createContextualFragment(elementToEdit);
-              articletoReplace = thePost.replaceChild(editform, article[1]);
-              const btnPubEdited = thePost.querySelector('#edit-pub-btn');
-
-              const newUrl = (url) => {
-                btnPubEdited.dataset.theUrl = url;
-              };
-              const btnUploadEditImage = thePost.querySelector('#btn-edit-img');
-              let changeImg = 0;
-              btnUploadEditImage.addEventListener('change', (event) => {
-                changeImg = 1;
-                const image = event.target.files[0];
-                uploadImage(image, newUrl);
-              });
-
-              btnPubEdited.addEventListener('click', (e) => {
-                e.preventDefault();
-                const newPostEdited = {
-                  image: changeImg === 0 ? btnUploadEditImage.dataset.img : btnPubEdited.dataset.theUrl,
-                  comment: thePost.querySelector('#content-edited').value,
-                  privacy: thePost.querySelector('#edited-privacy').value,
+          if (btnID.target.dataset.postid) {
+            deletePost(btnID.target.dataset.postid);
+          } else {
+            Object.entries(postsCollection).forEach((article) => {
+              const articleID = article[1].dataset.postid;
+              let articletoReplace = article[1];
+              const postToEdit = btnID.target.id;
+              if (articleID === postToEdit) {
+                const objToEdit = {
+                  postID: postToEdit,
+                  userID: articletoReplace.querySelector('.btn-edit').dataset.user,
+                  userName: articletoReplace.querySelector('.post-user-name').innerText,
+                  userEmail: articletoReplace.querySelector('.cont-post-user-info').dataset.email,
+                  userPhoto: articletoReplace.querySelector('.post-user-photo').currentSrc,
+                  publishDate: articletoReplace.querySelector('.post-user-date').innerText,
+                  comment: articletoReplace.querySelector('.post-user-text').outerText,
+                  image: articletoReplace.querySelector('.post-user-img').currentSrc,
+                  privacy: '1',
                 };
-                updatePost(btnID.target.id, newPostEdited);
-                thePost.innerHTML += '';
-              });
-            }
-          });
+                const elementToEdit = editPostForm(objToEdit);
+                const editform = document.createRange().createContextualFragment(elementToEdit);
+                articletoReplace = thePost.replaceChild(editform, article[1]);
+                const btnPubEdited = thePost.querySelector('#edit-pub-btn');
 
+                const newUrl = (url) => {
+                  btnPubEdited.dataset.theUrl = url;
+                };
+                const btnUploadEditImage = thePost.querySelector('#btn-edit-img');
+                let changeImg = 0;
+                btnUploadEditImage.addEventListener('change', (event) => {
+                  changeImg = 1;
+                  const image = event.target.files[0];
+                  uploadImage(image, newUrl);
+                });
 
-          // const newPostEdited = {
-          //   comment: 'prueba',
-          //   image: 'img/default-avatar.png',
-          //   privacy: 1,
-          // };
-          // updatePost(btnID.target.id, newPostEdited);
+                btnPubEdited.addEventListener('click', (e) => {
+                  e.preventDefault();
+                  const newPostEdited = {
+                    image: changeImg === 0 ? btnUploadEditImage.dataset.img : btnPubEdited.dataset.theUrl,
+                    comment: thePost.querySelector('#content-edited').value,
+                    privacy: thePost.querySelector('#edited-privacy').value,
+                  };
+                  updatePost(btnID.target.id, newPostEdited);
+                  thePost.innerHTML += '';
+                });
+              }
+            });
+          }
         });
       }
     });

@@ -463,6 +463,10 @@ body {
   width: 100%;
 }
 
+.delete-post {
+  background-color: #ff0c19;
+}
+
 /*Post------------------------ Fin*/
 @media (min-width: 801px) {
   .banner {

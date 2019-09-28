@@ -19,6 +19,7 @@ const viewPosts = objToPost => `
     <button class="btn btn-form-user icon-text btn-edit none" data-user="${objToPost.userID}" id="${objToPost.postID}">
         <span class="btn-icon icon-comentario"></span>Editar
     </button>
+    <button class="btn delete-post btn-edit none" data-user="${objToPost.userID}" data-postid="${objToPost.postID}">Eliminar</button>
   </div>
 </article>`;
 

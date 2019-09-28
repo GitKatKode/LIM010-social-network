@@ -3,7 +3,7 @@ const addPost = postObject => firebase.firestore().collection('posts').doc().set
 
 const updatePost = (postID, newPost) => firebase.firestore().collection('posts').doc(postID).update(newPost);
 
-// const deletePost = post => firebase.firestore().collection('posts').doc(post).delete();
+const deletePost = post => firebase.firestore().collection('posts').doc(post).delete();
 
 // firebase.firestore().collection('posts')
 //   .onSnapshot((s) => { s.forEach(d => firebase.firestore().collection('posts')
@@ -29,5 +29,5 @@ const postViewer = callback => firebase.firestore().collection('posts')
   });
 
 export {
-  addPost, uploadImage, postViewer, updatePost,
+  addPost, uploadImage, postViewer, updatePost, deletePost,
 };
