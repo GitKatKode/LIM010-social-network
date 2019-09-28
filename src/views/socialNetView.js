@@ -20,7 +20,26 @@ const viewSocialNet = `
       <input id="btn-upload-img" type="file" name="new-img" accept="image/png, image/jpeg" class="btn">
   </div>
 
-    <select name="select privacy" id="select-privacy">
+    <select name="select privacy" id="select-privacy" class="select-privacy">
+    <div class="selectionator">
+  <span class="search">
+    <span class="shadow">
+    </span>
+    <span class="overlay">
+    </span>
+    Options
+  </span>
+  <div class="menu">
+    <ul class="list">
+      <li>
+        <span class="header">Marketing</span>
+        </li>
+        <li>
+          <span class="header">Sales</span>
+        </li>
+      </ul>
+    </div>
+  </div>
     <option value="0" selected>Público</option> 
     <option value="1" >Privado</option>
     </select>

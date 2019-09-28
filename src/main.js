@@ -23,5 +23,8 @@ const init = () => {
 window.addEventListener('load', init);
 
 const logOut = document.getElementById('logout');
-
-logOut.addEventListener('click', () => { firebase.auth().signOut().then(window.location.hash = '#'); });
+const menubar = document.getElementById('menu-bar');
+logOut.addEventListener('click', () => {
+  firebase.auth().signOut().then(window.location.hash = '');
+  menubar.classList.add('none');
+});
