@@ -1,6 +1,8 @@
 /* eslint-disable max-len */
-import { addPost, uploadImage, postViewer } from '../lib/firestore.js';
-import { posts } from './postView.js';
+import {
+  addPost, uploadImage, postViewer, updatePost,
+} from '../lib/firestore.js';
+import { viewPosts, editPostForm } from './postView.js';
 
 const viewSocialNet = `
 <div class="user-card display-flex">
@@ -18,18 +20,10 @@ const viewSocialNet = `
       <input id="btn-upload-img" type="file" name="new-img" accept="image/png, image/jpeg" class="btn">
   </div>
 
-    <button class="btn btn-form-user icon-text" id="btn-privacy" data-privacy='0'>
-    <span class="btn-icon icon-public"></span><span id="text-privacy">Publico</span>
-    <span class="icon-arrow icon-arrow-bottom"></span>
-    </button>
-
-    <nav class="list-menu none">
-    <ul>
-    <li class="icon-text" id="btn-public"><span class="btn-icon icon-public" ></span>Publico</li>
-    <span class="line-horizontal"></span>
-    <li class="icon-text" id="btn-private"><span class="btn-icon icon-private" ></span>Solo yo</li>
-    </ul>
-    </nav>
+    <select name="select privacy" id="select-privacy">
+    <option value="0" selected>Público</option> 
+    <option value="1" >Privado</option>
+    </select>
 
     <button class="btn btn-form-user btn-publicar" id="btn-create-post">Publicar</button>
 </form>
@@ -58,9 +52,11 @@ const viewTheSocialNet = (user) => {
     userName.textContent = user.displayName;
     userEmail.textContent = user.email;
   }
-  let urlActive = '';
 
-  const theUrl = (url) => { urlActive = url; };
+
+  const theUrl = (url) => {
+    btnUploadPost.dataset.theUrl = url;
+  };
 
   btnUploadImg.addEventListener('change', (e) => {
     const image = e.target.files[0];
@@ -71,10 +67,20 @@ const viewTheSocialNet = (user) => {
     e.preventDefault();
     const post = mainElem.querySelector('#content-to-post').value;
     const activeDate = new Date();
-
     const name = user.displayName ? user.displayName : user.email;
     const photo = user.photoURL ? user.photoURL : 'img/default-avatar.png';
-    addPost(post, urlActive, user.uid, name, user.email, activeDate, photo)
+    const privacy = mainElem.querySelector('#select-privacy').value;
+    const postObject = {
+      userID: user.uid,
+      comment: post,
+      image: btnUploadPost.dataset.theUrl ? btnUploadPost.dataset.theUrl : '',
+      userName: name,
+      userEmail: user.email,
+      userPhoto: photo,
+      publishDate: activeDate,
+      privacy,
+    };
+    addPost(postObject)
       .then(() => {
         console.log('Document successfully written!');
       })
@@ -85,11 +91,9 @@ const viewTheSocialNet = (user) => {
   });
 
   postViewer((allPosts) => {
-    // thePost.innerHTML += posts(`${user.uid}${dateActive}`, photo, name, post, urlActive, date, 0, 0, '??');
-    // publicar post en html
+    thePost.innerHTML = null;
 
     allPosts.forEach((post) => {
-      // eslint-disable-next-line no-underscore-dangle
       const onePost = post.data();
       const activeDate = onePost.publishDate.toDate();
       const date = `
@@ -100,7 +104,83 @@ const viewTheSocialNet = (user) => {
       ${(`0${activeDate.getMinutes()}`).slice(-2)}:
       ${(`0${activeDate.getSeconds()}`).slice(-2)}
       `;
-      thePost.innerHTML += posts('idpost', onePost.userPhoto, onePost.userName, onePost.comment, onePost.image, date, 0, 0, '??');
+      const postObject = {
+        postID: post.id,
+        userID: onePost.userID,
+        comment: onePost.comment,
+        image: onePost.image,
+        userName: onePost.userName,
+        userEmail: user.email,
+        userPhoto: onePost.userPhoto,
+        publishDate: date,
+        privacy: onePost.privacy,
+      };
+
+      if (postObject.userID === user.uid || postObject.privacy === '0') {
+        thePost.innerHTML += viewPosts(postObject);
+      }
+    });
+    const btnEditCollection = document.getElementsByClassName('btn-edit');
+    const postsCollection = thePost.querySelectorAll('.box-post-user');
+    Object.entries(btnEditCollection).forEach((element) => {
+      const singleBtnEdit = element[1];
+      if (singleBtnEdit.dataset.user === user.uid) {
+        singleBtnEdit.classList.remove('none');
+        singleBtnEdit.addEventListener('click', (btnID) => {
+          Object.entries(postsCollection).forEach((article) => {
+            const articleID = article[1].dataset.postid;
+            let articletoReplace = article[1];
+            const postToEdit = btnID.target.id;
+            if (articleID === postToEdit) {
+              const objToEdit = {
+                postID: postToEdit,
+                userID: articletoReplace.querySelector('.btn-edit').dataset.user,
+                userName: articletoReplace.querySelector('.post-user-name').innerText,
+                userEmail: articletoReplace.querySelector('.cont-post-user-info').dataset.email,
+                userPhoto: articletoReplace.querySelector('.post-user-photo').currentSrc,
+                publishDate: articletoReplace.querySelector('.post-user-date').innerText,
+                comment: articletoReplace.querySelector('.post-user-text').outerText,
+                image: articletoReplace.querySelector('.post-user-img').currentSrc,
+                privacy: '1',
+              };
+              const elementToEdit = editPostForm(objToEdit);
+              const editform = document.createRange().createContextualFragment(elementToEdit);
+              articletoReplace = thePost.replaceChild(editform, article[1]);
+              const btnPubEdited = thePost.querySelector('#edit-pub-btn');
+
+              const newUrl = (url) => {
+                btnPubEdited.dataset.theUrl = url;
+              };
+              const btnUploadEditImage = thePost.querySelector('#btn-edit-img');
+              let changeImg = 0;
+              btnUploadEditImage.addEventListener('change', (event) => {
+                changeImg = 1;
+                const image = event.target.files[0];
+                uploadImage(image, newUrl);
+              });
+
+              btnPubEdited.addEventListener('click', (e) => {
+                e.preventDefault();
+                const newPostEdited = {
+                  image: changeImg === 0 ? btnUploadEditImage.dataset.img : btnPubEdited.dataset.theUrl,
+                  comment: thePost.querySelector('#content-edited').value,
+                  privacy: thePost.querySelector('#edited-privacy').value,
+                };
+                updatePost(btnID.target.id, newPostEdited);
+                thePost.innerHTML += '';
+              });
+            }
+          });
+
+
+          // const newPostEdited = {
+          //   comment: 'prueba',
+          //   image: 'img/default-avatar.png',
+          //   privacy: 1,
+          // };
+          // updatePost(btnID.target.id, newPostEdited);
+        });
+      }
     });
   });
 
