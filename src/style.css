@@ -235,15 +235,12 @@ body {
 
 /* user-card */
 .user-card {
-  -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
   width: 30%;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  margin: 10px 15px 20px;
+  margin: 5% 7% 5%;
   -webkit-box-pack: initial;
       -ms-flex-pack: initial;
           justify-content: initial;
@@ -285,6 +282,9 @@ body {
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
   margin-top: 3em;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 /*Formulario-----------*/
@@ -314,8 +314,8 @@ body {
   border-radius: 8px;
   -webkit-box-shadow: 0px 0px 5px -3px #12d369;
           box-shadow: 0px 0px 5px -3px #12d369;
-  margin-bottom: 30px;
   max-width: 50%;
+  min-width: 300px;
   -webkit-box-flex: 1;
       -ms-flex-positive: 1;
           flex-grow: 1;

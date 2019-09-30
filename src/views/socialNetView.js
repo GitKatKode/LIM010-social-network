@@ -67,7 +67,7 @@ const viewTheSocialNet = (user) => {
   const thePost = mainElem.querySelector('#container-posts');
 
   if (user != null) {
-    userPhoto.setAttribute('src', user.photoURL === null ? 'img/default-avatar.png' : user.photoURL);
+    userPhoto.setAttribute('src', user.photoURL === null ? 'img/dafault-avatar2.png' : user.photoURL);
     userName.textContent = user.displayName;
     userEmail.textContent = user.email;
   }
@@ -87,7 +87,7 @@ const viewTheSocialNet = (user) => {
     const post = mainElem.querySelector('#content-to-post').value;
     const activeDate = new Date();
     const name = user.displayName ? user.displayName : user.email;
-    const photo = user.photoURL ? user.photoURL : 'img/default-avatar.png';
+    const photo = user.photoURL ? user.photoURL : 'img/dafault-avatar2.png';
     const privacy = mainElem.querySelector('#select-privacy').value;
     const postObject = {
       userID: user.uid,
