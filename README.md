@@ -146,33 +146,33 @@ El objetivo de usar Firestore en este proyecto, es que aprendes a manejar y pers
 
 ### DOM y Web APIs
 - [ ] Manipulación dinámica del DOM
-- [ ] History API
-- [ ] `localStorage`
+- [x] History API
+- [x] `localStorage`
 
 ### Javascript
-- [ ] Uso de callbacks
-- [ ] Consumo de Promesas
-- [ ] ES modules
+- [x] Uso de callbacks
+- [x] Consumo de Promesas
+- [x] ES modules
 
 ### Firebase
-- [ ] Firestore
-- [ ] Firebase Auth
+- [x] Firestore
+- [x] Firebase Auth
 - [ ] Firebase security rules
-- [ ] Observables
+- [x] Observables
 
 ### Testing
-- [ ] Testeo de tus funciones
-- [ ] Testeo asíncrono
-- [ ] Mocking
+- [x] Testeo de tus funciones
+- [x] Testeo asíncrono
+- [x] Mocking
 
 ### Git y Github
-- [ ] Colaboración en Github
-- [ ] Organización en Github
+- [x] Colaboración en Github
+- [x] Organización en Github
 
 ### Buenas prácticas de desarrollo
 - [ ] Modularización
-- [ ] Nomenclatura / Semántica
-- [ ] Linting
+- [x] Nomenclatura / Semántica
+- [x] Linting
 
 ***
 
